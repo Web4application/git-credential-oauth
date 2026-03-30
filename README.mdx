@@ -64,9 +64,9 @@ If you have problems, make sure that the binary is [located in the path](https:/
 #### Homebrew
 
 macOS users can install from [Homebrew](https://formulae.brew.sh/formula/git-credential-oauth#default):
-
+```sh
 	brew install git-credential-oauth
-	
+```	
 #### MacPorts
 
 macOS users can alternatively install via [MacPorts](https://ports.macports.org/port/git-credential-oauth/):
@@ -76,20 +76,20 @@ macOS users can alternatively install via [MacPorts](https://ports.macports.org/
 ### Windows
 
 Install with [winget](https://learn.microsoft.com/en-us/windows/package-manager/winget/):
-
+```init.sh
     winget install hickford.git-credential-oauth
-
+```
 ### Go users
 
 Go users can install the latest release to `~/go/bin` with:
-
+```bash
 	go install github.com/hickford/git-credential-oauth@latest
-
+```
 ## Configuration
 
 As a convenience, you can run:
 
-```sh
+```npx
 git credential-oauth configure
 ```
 
@@ -115,7 +115,7 @@ You may choose a different storage helper such as `osxkeychain`, `wincred` or `l
 
 Edit your [global git config](https://git-scm.com/docs/git-config#FILES) `~/.gitconfig` to include the following lines:
 
-```ini
+```.ini
 [credential]
 	helper = cache --timeout 21600	# six hours
 	helper = oauth
@@ -136,8 +136,10 @@ Currently only GitHub and [GitLab](https://docs.gitlab.com/ee/api/oauth2.html#de
 ### Unconfiguration
 
 Edit `~/.gitconfig` manually, or run:
-
+```npm
 	git config --global --unset-all credential.helper oauth
+run:
+```
 
 ## Custom hosts
 
@@ -152,7 +154,7 @@ To use with a custom host, eg. `gitlab.example.com`:
     * Browse to eg. https://gitlab.example.com/-/profile/applications.
 	* "Add new application"
 	* Specify name `git-credential-oauth`.
-	* Specify redirect URI `http://127.0.0.1`.
+	* Specify redirect URI ``http://127.0.0.1``.
 	* Uncheck "confidential"
 	* Select scopes "read_repository" and "write_repository".
 	* "Save application".
@@ -177,7 +179,7 @@ git config --global credential.https://gitlab.example.com.oauthDeviceAuthURL /oa
 2. Adjust the config commands below with the generated client id, OAuth scopes and relative URLs.
 3. Share the config commands with colleagues so they can skip the registration step.
 
-```sh
+```bash
 git config --global credential.https://code.example.com.oauthClientId <CLIENTID>
 git config --global credential.https://code.example.com.oauthScopes "read_repository write_repository"
 git config --global credential.https://code.example.com.oauthAuthURL /oauth/authorize
@@ -218,7 +220,7 @@ The maintainer personally uses GCM on Windows and git-credential-oauth on Linux.
 2. Check Git version `git --version` is at least 2.45. Older Git versions have [limited support for storing OAuth refresh tokens](https://github.com/hickford/git-credential-oauth/issues/20).
 3. Check git-credential-oauth version is [recent](https://github.com/hickford/git-credential-oauth/releases/).
 4. Check Git remote URL `git remote -v` does not contain a username.
-5. Test git-credential-oauth in verbose mode for *your specific host* `printf host=example.com\nprotocol=https\n | git-credential-oauth -verbose get`. Set any config keys suggested.
+5. Test git-credential-oauth in verbose mode for **your specific host** `printf host=example.com\nprotocol=https\n | git-credential-oauth -verbose get`. Set any config keys suggested.
 
 ### GitHub organizations
 
@@ -235,20 +237,20 @@ Install locally with `go install .`.
 
 Use the `-verbose` flag to print more details:
 
-```sh
+```verbose
 git config --global --unset-all credential.helper oauth
 git config --global --add credential.helper "oauth -verbose"
 ```
 
 You can also test git-credential-oauth in isolation:
 
-```
+```uv
 echo host=gitlab.com\nprotocol=https | git-credential-oauth -verbose get
 ```
 
 You can test configured helpers in combination with `git credential fill`, eg.
 
-```
+```ext
 echo url=https://gitlab.com | git credential fill
 ```
 
