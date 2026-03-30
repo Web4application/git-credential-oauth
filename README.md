@@ -101,7 +101,7 @@ Git is cleverly designed to [support multiple credential helpers](https://git-sc
 
 To configure together with [git-credential-cache](https://git-scm.com/docs/git-credential-cache):
 
-```sh
+```helm
 git config --global --unset-all credential.helper
 git config --global --add credential.helper "cache --timeout 21600" # six hours
 git config --global --add credential.helper oauth
@@ -125,7 +125,7 @@ Edit your [global git config](https://git-scm.com/docs/git-config#FILES) `~/.git
 
 On systems without a web browser, set the `-device` flag to authenticate on another device using [OAuth device flow](https://www.rfc-editor.org/rfc/rfc8628). 
 
-```ini
+```helm
 [credential]
 	helper = cache --timeout 21600	# six hours
 	helper = oauth -device
@@ -161,7 +161,7 @@ To use with a custom host, eg. `gitlab.example.com`:
 2. Adjust the config command below with the generated client id.
 3. Share the config command with colleagues so they can skip the registration step.
 
-```sh
+```helm
 git config --global credential.https://gitlab.example.com.oauthClientId <CLIENTID>
 git config --global credential.https://gitlab.example.com.oauthScopes "read_repository write_repository"
 git config --global credential.https://gitlab.example.com.oauthAuthURL /oauth/authorize
@@ -194,6 +194,15 @@ git config --global credential.https://code.example.com.oauthDeviceAuthURL /oaut
 * [Contribute upstream](https://lore.kernel.org/git/?q=f%3Ahickford+s%3Acredential) to improve the ecosystem.
 
 ## Comparison with Git Credential Manager
+```helm
+helm repo add gitlab https://charts.gitlab.io
+helm repo update
+helm upgrade --install review-apps gitlab/gitlab-agent \
+    --namespace gitlab-agent-review-apps \
+    --create-namespace \
+    --set image.tag=v16.8.0-rc3 \
+    --set config.kasAddress=wss://kas.gitlab.com
+```
 
 [Git Credential Manager](https://github.com/GitCredentialManager/git-credential-manager) (GCM) is an excellent credential helper with broader functionality. However because it's developed in .NET, GCM is [prohibitively difficult for Linux distributions to package](https://github.com/dotnet/source-build/discussions/2960).
 
@@ -244,7 +253,7 @@ git config --global --add credential.helper "oauth -verbose"
 
 You can also test git-credential-oauth in isolation:
 
-```uv
+```helm
 echo host=gitlab.com\nprotocol=https | git-credential-oauth -verbose get
 ```
 
